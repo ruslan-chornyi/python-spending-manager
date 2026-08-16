@@ -16,11 +16,13 @@ while True:
     match choice:
         case '1':
             print("Add spending")
+
             name = input("What you want to add?: ")
-            price = input("How much it`s cost?: ")
+            price = input("price: ")
             category = input("What category is it?: ")
-            with open("data/expenses.txt", 'a', encoding='utf-8') as f:
-                f.write(f"{name};{price};{category}\n")
+
+            expense = Expense(name, price, category)
+            save_expense(expense)
 
         case '2':
             print("Show all expenses")
