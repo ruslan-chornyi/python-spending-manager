@@ -11,4 +11,4 @@ class Expense:
         return f"Expense(name='{self.name}', price={self.price}, category='{self.category}')"
 
     def to_file_line(self):
-        return f"{self.name} - {self.price}$ ({self.category})\n"
+        return f"{self.name};{self.price};{self.category}\n"
