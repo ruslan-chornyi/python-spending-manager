@@ -1,6 +1,6 @@
 # Final CLI spending manager
 from models import Expense
-from storage import load_expense, save_expense
+from storage import load_expense, save_expense, once_category
 
 #menu
 print("""1 - Add spending
@@ -16,9 +16,8 @@ while True:
     match choice:
         case '1':
             print("Add spending")
-
             name = input("What you want to add?: ")
-            price = input("price: ")
+            price = int(input("price: "))
             category = input("What category is it?: ")
 
             expense = Expense(name, price, category)
@@ -26,24 +25,29 @@ while True:
 
         case '2':
             print("Show all expenses")
-            for name, price, category in load_expense():
-                print(f"{name} - {price}$ ({category})")
+
+            for e in load_expense():
+                print(e, end='')
 
         case '3':
             print("Show the total amount")
             total = 0
-            for name, price, category in load_expense():
-                total += price
+
+            for e in load_expense():
+                total += e.price
             print(f"Total amount = {total}$")
 
         case '4':
             print("Show expenses by category\n")
+            expenses = load_expense()
+            print(once_category(expenses))
             user_category = input("What category you want to see?: ").lower()
             total = 0
-            for name, price, category in load_expense():
-                if category == user_category:
-                    print(f"{name} - {price}$ ({category})")
-                    total += price
+
+            for e in load_expense():
+                if e.category == user_category:
+                    print(f"{e.name} - {e.price}$ ({e.category})")
+                    total += e.price
 
             print(f"\nTotal amount = {total}$")
 
