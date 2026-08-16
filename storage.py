@@ -6,12 +6,12 @@ def load_expense():
         for line in f.readlines():
             name, price, category = line.strip().split(';')
             category = category.lower()
-            expenses.append(Expense(str(name), int(price), str(category)))
+            expenses.append(Expense(name, int(price), category))
     return expenses
 
 def save_expense(expense):
     with open("data/expenses.txt", 'a', encoding='utf-8') as f:
         f.write(expense.to_file_line())
 
-def once_category(expenses):
+def get_categories(expenses):
     return {e.category for e in expenses}
