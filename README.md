@@ -15,7 +15,7 @@ A simple command-line tool for tracking personal expenses, built with pure Pytho
 - No external dependencies (standard library only)
 
 ## How to run
-
+You must create your own file '.env', and write there next - BOT_TOKEN = your token
 ```bash
 git clone https://github.com/ruslan-chornyi/python-spending-manager.git
 cd python-spending-manager
