@@ -1,5 +1,3 @@
-from aiogram.fsm.state import State, StatesGroup
-
 class Expense:
     def __init__(self, name: str, price: int, category: str):
         self.name = name
@@ -14,6 +12,3 @@ class Expense:
 
     def to_file_line(self) -> str:
         return f"{self.name};{self.price};{self.category}\n"
-
-class CategoryStates(StatesGroup):
-    waiting_for_category = State()
