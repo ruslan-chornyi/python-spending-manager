@@ -18,7 +18,13 @@ dp = Dispatcher(storage=MemoryStorage())
 #async command start
 @dp.message(Command("start"))
 async def start_handler(message: types.Message):
-    await message.answer("Hello! I'm your expense bot.")
+    await message.answer("""Hello! I'm your expense bot.
+You can use these commands: 
+/add - add a new expense to your list
+/all - show all expenses
+/total - show total sum of all expenses
+/category - show expense by 1 category
+""")
 
 #async command add
 @dp.message(Command("add"))
