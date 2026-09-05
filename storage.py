@@ -9,10 +9,14 @@ def load_expense() -> list[Expense]:
     expenses = []
     with open("data/expenses.txt", 'r', encoding='utf-8') as f:
         for line in f.readlines():
-            name, price, category = line.strip().split(';')
+            user_id, name, price, category = line.strip().split(';')
             category = category.lower()
-            expenses.append(Expense(name, int(price), category))
+            expenses.append(Expense(int(user_id), name, int(price), category))
     return expenses
+
+def load_expense_by_user(user_id: int) -> list[Expense]:
+    expenses = load_expense()
+    return [e for e in expenses if e.user_id == user_id]
 
 def save_expense(expense) -> None:
     with open("data/expenses.txt", 'a', encoding='utf-8') as f:

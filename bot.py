@@ -1,6 +1,6 @@
 import asyncio
 import os
-from storage import load_expense, save_expense
+from storage import load_expense_by_user, save_expense
 from models import Expense
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
@@ -70,7 +70,7 @@ async def add_category_handler(message: types.Message, state: FSMContext):
     category = message.text.lower()
     data = await state.get_data()
 
-    expense = Expense(data["name"], data["price"], category)
+    expense = Expense(message.from_user.id, data["name"], data["price"], category)
     save_expense(expense)
 
     await message.answer(f"Added: {expense}")
@@ -79,7 +79,7 @@ async def add_category_handler(message: types.Message, state: FSMContext):
 #async command all
 @dp.message(Command("all"))
 async def all_handler(message: types.Message):
-    expenses = load_expense()
+    expenses = load_expense_by_user(message.from_user.id)
 
     lines = [str(e) for e in expenses]
     text = "".join(lines)
@@ -88,7 +88,7 @@ async def all_handler(message: types.Message):
 #async command total
 @dp.message(Command("total"))
 async def total_handler(message: types.Message):
-    expenses = load_expense()
+    expenses = load_expense_by_user(message.from_user.id)
     total = 0
 
     for e in expenses:
@@ -98,7 +98,7 @@ async def total_handler(message: types.Message):
 #async command category
 @dp.message(Command("category"))
 async def category_handler(message: types.Message, state: FSMContext):
-    expenses = load_expense()
+    expenses = load_expense_by_user(message.from_user.id)
     categories = {e.category for e in expenses}
 
     if not categories:
@@ -116,7 +116,7 @@ async def category_response_handler(message: types.Message, state: FSMContext):
         return
 
     usr_category = message.text.lower()
-    expenses = load_expense()
+    expenses = load_expense_by_user(message.from_user.id)
 
     total = 0
     lines = []

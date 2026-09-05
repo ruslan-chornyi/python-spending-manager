@@ -2,6 +2,8 @@
 from models import Expense
 from storage import load_expense, save_expense, get_categories
 
+Local_User_Id = 0
+
 #menu
 print("""1 - Add spending
 2 - Show all expenses
@@ -20,7 +22,7 @@ while True:
             price = int(input("price: "))
             category = input("What category is it?: ")
 
-            expense = Expense(name, price, category)
+            expense = Expense(Local_User_Id, name, price, category)
             save_expense(expense)
 
         case '2':
