@@ -1,6 +1,11 @@
 from models import Expense
+import os
 
 def load_expense() -> list[Expense]:
+
+    if not os.path.exists("data/expenses.txt"):
+        os.makedirs("data/expenses.txt")
+
     expenses = []
     with open("data/expenses.txt", 'r', encoding='utf-8') as f:
         for line in f.readlines():
