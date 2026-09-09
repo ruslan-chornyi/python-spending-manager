@@ -1,6 +1,6 @@
 import uuid
 
-Old_format_fields = 4
+Old_format_lines = 4
 
 def migrate():
 
@@ -11,7 +11,7 @@ def migrate():
     for line in lines:
         parts = line.split(',')
 
-        if len(parts) == Old_format_fields:
+        if len(parts) == Old_format_lines:
             user_id, name, price, category = parts
             expense_id = uuid.uuid4()
             new_lines.append(f"{expense_id};{user_id};{name},{price},{category}")
