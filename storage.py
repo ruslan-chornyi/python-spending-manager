@@ -2,10 +2,8 @@ from models import Expense
 import os
 
 def load_expense() -> list[Expense]:
-
     if not os.path.exists("data"):
         os.makedirs("data")
-
     if not os.path.exists("data/expenses.txt"):
         with open("data/expenses.txt", 'w', encoding='utf-8') as f:
             pass
@@ -13,9 +11,13 @@ def load_expense() -> list[Expense]:
     expenses = []
     with open("data/expenses.txt", 'r', encoding='utf-8') as f:
         for line in f.readlines():
-            expense_id, user_id, name, price, category = line.strip().split(';')
+            line = line.strip()
+            if not line:
+                continue
+
+            expense_id, user_id, name, price, category = line.split(';')
             category = category.lower()
-            expenses.append(Expense(str(expense_id), int(user_id), name, int(price), category))
+            expenses.append(Expense(expense_id, int(user_id), name, int(price), category))
     return expenses
 
 def load_expense_by_user(user_id: int) -> list[Expense]:
