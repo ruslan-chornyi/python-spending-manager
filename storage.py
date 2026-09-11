@@ -3,8 +3,12 @@ import os
 
 def load_expense() -> list[Expense]:
 
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
     if not os.path.exists("data/expenses.txt"):
-        os.makedirs("data/expenses.txt")
+        with open("data/expenses.txt", 'w', encoding='utf-8') as f:
+            pass
 
     expenses = []
     with open("data/expenses.txt", 'r', encoding='utf-8') as f:
@@ -26,10 +30,10 @@ def get_categories(expenses: list[Expense]) -> set[str]:
     return {e.category for e in expenses}
 
 def delete_expense(expense_id: str) -> bool:
-    expense = load_expense()
-    remaining = [e for e in expense if e.expense_id != expense_id]
+    expenses = load_expense()
+    remaining = [e for e in expenses if e.expense_id != expense_id]
 
-    if len(remaining) == len(expense):
+    if len(remaining) == len(expenses):
         return False    #do nothing, if it didn`t find the id
 
     with open("data/expenses.txt", 'w', encoding='utf-8') as f:

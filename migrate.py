@@ -4,17 +4,17 @@ Old_format_lines = 4
 
 def migrate():
 
-    with open('data/expenses.json', 'r', encoding='utf-8') as f:
+    with open('data/expenses.txt', 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     new_lines = []
     for line in lines:
-        parts = line.split(',')
+        parts = line.split(';')
 
         if len(parts) == Old_format_lines:
             user_id, name, price, category = parts
-            expense_id = uuid.uuid4()
-            new_lines.append(f"{expense_id};{user_id};{name},{price},{category}")
+            expense_id = str(uuid.uuid4())
+            new_lines.append(f"{expense_id};{user_id};{name},{price},{category}\n")
 
         else:
             new_lines.append(line)

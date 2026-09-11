@@ -1,5 +1,5 @@
 import asyncio
-import os
+import os, uuid
 from storage import load_expense_by_user, save_expense
 from models import Expense
 from dotenv import load_dotenv
@@ -69,8 +69,9 @@ async def add_category_handler(message: types.Message, state: FSMContext):
 
     category = message.text.lower()
     data = await state.get_data()
+    expense_id = str(uuid.uuid4())
 
-    expense = Expense(message.from_user.id, data["name"], data["price"], category)
+    expense = Expense(expense_id ,message.from_user.id, data["name"], data["price"], category)
     save_expense(expense)
 
     await message.answer(f"Added: {expense}")
