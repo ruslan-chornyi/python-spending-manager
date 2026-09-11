@@ -14,7 +14,7 @@ def migrate():
         if len(parts) == Old_format_lines:
             user_id, name, price, category = parts
             expense_id = str(uuid.uuid4())
-            new_lines.append(f"{expense_id};{user_id};{name},{price},{category}\n")
+            new_lines.append(f"{expense_id};{user_id};{name};{price};{category}\n")
 
         else:
             new_lines.append(line)
