@@ -1,6 +1,6 @@
 # Final CLI spending manager
 from models import Expense
-from storage import load_expense, save_expense, get_categories
+from storage import load_expense, save_expense, get_categories, delete_expense
 import uuid
 
 Local_User_Id = 0
@@ -10,7 +10,8 @@ print("""1 - Add spending
 2 - Show all expenses
 3 - Show the total amount
 4 - Show expenses by category
-5 - Exit""")
+5 - delete
+6 - Exit""")
 
 #Functions
 while True:
@@ -56,6 +57,24 @@ while True:
             print(f"\nTotal amount = {total}$")
 
         case '5':
+            print("Delete expense")
+            expenses = load_expense()
+            ex_id = []
+
+            for i, e in enumerate(expenses, start=1):
+                ex_id.append(e.expense_id)
+                print(i, '-', e, end='')
+
+            user_delete_num = input("Chose what you want to delete = ").isdigit()
+            if user_delete_num -1 == ex_id:
+                delete_expense()
+                print("Success!")
+            elif user_delete_num -1 != ex_id:
+                print("ID not found")
+            else:
+                print("Wrong input")
+
+        case '6':
             print("Program is finished, thanks for using me) \nBye")
             break
 

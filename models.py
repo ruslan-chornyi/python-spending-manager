@@ -9,7 +9,7 @@ class Expense:
         self.category = category
 
     def __str__(self) -> str:
-        return f"{self.name} - {self.price}$ in -{self.category}- category\n"
+        return f"{self.name} cost {self.price}$ in -{self.category}- category\n"
 
     def __repr__(self) -> str:
         return f"Expense(expense_id {self.expense_id}, user_id={self.user_id}, name='{self.name}', price={self.price}, category='{self.category}')"
