@@ -7,3 +7,6 @@ class AddStates(StatesGroup):
     waiting_for_name = State()
     waiting_for_price = State()
     waiting_for_category = State()
+
+class DeleteStates(StatesGroup):
+    waiting_for_number = State()
