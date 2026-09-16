@@ -65,14 +65,20 @@ while True:
                 ex_id.append(e.expense_id)
                 print(i, '-', e, end='')
 
-            user_delete_num = input("Chose what you want to delete = ").isdigit()
-            if user_delete_num -1 == ex_id:
-                delete_expense()
-                print("Success!")
-            elif user_delete_num -1 != ex_id:
-                print("ID not found")
-            else:
+            user_input = input("Choose what you want to delete: ")
+
+            if not user_input.isdigit():
                 print("Wrong input")
+            else:
+                user_delete_num = int(user_input)
+                if user_delete_num < 1 or user_delete_num > len(ex_id):
+                    print("Number out of range")
+                else:
+                    selected_id = ex_id[user_delete_num - 1]
+                    if delete_expense(selected_id):
+                        print("Success!")
+                    else:
+                        print("ID not found")
 
         case '6':
             print("Program is finished, thanks for using me) \nBye")
