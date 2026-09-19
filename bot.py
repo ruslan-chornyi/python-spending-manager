@@ -83,7 +83,7 @@ async def all_handler(message: types.Message):
     expenses = load_expense_by_user(message.from_user.id)
 
     lines = [str(e) for e in expenses]
-    text = "".join(lines)
+    text = "".join(lines) if lines else "No expenses yet"
     await message.answer(text)
 
 #async command total
