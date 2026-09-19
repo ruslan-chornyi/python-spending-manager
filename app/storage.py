@@ -1,15 +1,15 @@
-from models import Expense
+from app.models import Expense
 import os
 
 def load_expense() -> list[Expense]:
-    if not os.path.exists("data"):
-        os.makedirs("data")
-    if not os.path.exists("data/expenses.txt"):
-        with open("data/expenses.txt", 'w', encoding='utf-8') as f:
+    if not os.path.exists("../data"):
+        os.makedirs("../data")
+    if not os.path.exists("../data/expenses.txt"):
+        with open("../data/expenses.txt", 'w', encoding='utf-8') as f:
             pass
 
     expenses = []
-    with open("data/expenses.txt", 'r', encoding='utf-8') as f:
+    with open("../data/expenses.txt", 'r', encoding='utf-8') as f:
         for line in f.readlines():
             line = line.strip()
             if not line:
@@ -25,7 +25,7 @@ def load_expense_by_user(user_id: int) -> list[Expense]:
     return [e for e in expenses if e.user_id == user_id]
 
 def save_expense(expense) -> None:
-    with open("data/expenses.txt", 'a', encoding='utf-8') as f:
+    with open("../data/expenses.txt", 'a', encoding='utf-8') as f:
         f.write(expense.to_file_line())
 
 def get_categories(expenses: list[Expense]) -> set[str]:
@@ -38,7 +38,7 @@ def delete_expense(expense_id: str) -> bool:
     if len(remaining) == len(expenses):
         return False    #do nothing, if it didn`t find the id
 
-    with open("data/expenses.txt", 'w', encoding='utf-8') as f:
+    with open("../data/expenses.txt", 'w', encoding='utf-8') as f:
         for e in remaining:
             f.write(e.to_file_line())
     return True

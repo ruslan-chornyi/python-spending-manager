@@ -1,12 +1,13 @@
 import asyncio, os, uuid
-from storage import load_expense_by_user, save_expense, delete_expense
-from models import Expense
+from app.storage import load_expense_by_user, save_expense, delete_expense
+from app.states import CategoryStates, AddStates, DeleteStates
+from app.models import Expense
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
-from states import CategoryStates, AddStates, DeleteStates
+
 
 load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN")

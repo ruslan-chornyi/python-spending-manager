@@ -1,6 +1,6 @@
 # Final CLI spending manager
-from models import Expense
-from storage import load_expense, save_expense, get_categories, delete_expense
+from app.models import Expense
+from app.storage import load_expense, save_expense, get_categories, delete_expense
 import uuid
 
 Local_User_Id = 0

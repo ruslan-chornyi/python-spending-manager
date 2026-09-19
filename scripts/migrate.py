@@ -4,7 +4,7 @@ Old_format_lines = 4
 
 def migrate():
 
-    with open('data/expenses.txt', 'r', encoding='utf-8') as f:
+    with open('../data/expenses.txt', 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     new_lines = []
@@ -19,7 +19,7 @@ def migrate():
         else:
             new_lines.append(line)
 
-    with open('data/expenses.txt', 'w', encoding='utf-8') as f:
+    with open('../data/expenses.txt', 'w', encoding='utf-8') as f:
         f.writelines(new_lines)
 
     print(f"Migration was successful! \nNew lines: {len(new_lines)}")
