@@ -1,5 +1,9 @@
+from app.db import Base, engine
 from app.models import Expense
 import os
+
+def init_db() -> None:
+    Base.metadata.create_all(engine)
 
 def load_expense() -> list[Expense]:
     if not os.path.exists("../data"):
