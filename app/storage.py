@@ -33,14 +33,3 @@ def delete_expense(expense_id: str) -> bool:
             session.commit()
             return True
 
-
-
-    #     remaining = [e for e in expenses if e.expense_id != expense_id]
-    #
-    # if len(remaining) == len(expenses):
-    #     return False    #do nothing, if it didn`t find the id
-    #
-    # with open("../data/expenses.txt", 'w', encoding='utf-8') as f:
-    #     for e in remaining:
-    #         f.write(e.to_file_line())
-    # return True
