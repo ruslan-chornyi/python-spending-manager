@@ -1,6 +1,6 @@
 from app.db import Base, engine, SessionLocal
 from app.models import Expense
-
+from sqlalchemy import func
 
 def init_db() -> None:
     Base.metadata.create_all(engine)
@@ -45,3 +45,13 @@ def delete_expense(expense_id: str) -> bool:
             session.commit()
             return True
 
+def total_spent_by_user(user_id: int) -> int:
+    with SessionLocal() as session:
+        return session.query(func.sum(Expense.price)).filter(Expense.user_id == user_id).scalar()
+
+def load_expenses_sorted_by_price(user_id: int, descending: bool = False) -> list[Expense]:
+    with SessionLocal() as session:
+        if descending:
+            return session.query(Expense).order_by(Expense.price.desc()).filter(Expense.user_id == user_id).all()
+        else:
+            return session.query(Expense).order_by(Expense.price).filter(Expense.user_id == user_id).all()
