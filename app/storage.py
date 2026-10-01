@@ -19,6 +19,18 @@ def load_expense_by_user(user_id: int) -> list[Expense]:
     with SessionLocal() as session:
         return session.query(Expense).filter(Expense.user_id == user_id).all()
 
+def load_expense_by_category(category: str) -> list[Expense]:
+    with SessionLocal() as session:
+        return session.query(Expense).filter(Expense.category == category).all()
+
+def load_expense_by_user_and_category(user_id: int, category: str) -> list[Expense]:
+    with SessionLocal() as session:
+        return session.query(Expense).filter(Expense.user_id == user_id, Expense.category == category).all()
+
+def count_expense_by_user(user_id: int) -> int:
+    with SessionLocal() as session:
+        return session.query(Expense).filter(Expense.user_id == user_id).count()
+
 def get_categories(expenses: list[Expense]) -> set[str]:
     return {e.category for e in expenses}
 
