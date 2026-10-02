@@ -1,4 +1,4 @@
-# Final CLI spending manager
+# Main consol
 from app.models import Expense
 from app.storage import load_expense, save_expense, get_categories, delete_expense
 import uuid
@@ -25,7 +25,7 @@ while True:
             category = input("What category is it?: ")
             expense_id = str(uuid.uuid4())
 
-            expense = Expense(expense_id ,Local_User_Id, name, price, category)
+            expense = Expense(user_id=Local_User_Id, name=name, price=price, category=category)
             save_expense(expense)
 
         case '2':

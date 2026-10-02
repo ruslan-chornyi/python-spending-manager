@@ -70,9 +70,11 @@ async def add_category_handler(message: types.Message, state: FSMContext):
 
     category = message.text.lower()
     data = await state.get_data()
-    expense_id = str(uuid.uuid4())
 
-    expense = Expense(expense_id ,message.from_user.id, data["name"], data["price"], category)
+    expense = Expense(user_id=message.from_user.id,
+    name=data["name"],
+    pricr=data["price"],
+    category=category)
     save_expense(expense)
 
     await message.answer(f"Added: {expense}")

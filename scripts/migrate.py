@@ -1,28 +1,26 @@
-import uuid
+from app.models import Expense
+from app.storage import save_expense
 
 Old_format_lines = 4
 
 def migrate():
-
     with open('../data/expenses.txt', 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
-    new_lines = []
+    count = 0
     for line in lines:
         parts = line.split(';')
 
         if len(parts) == Old_format_lines:
             user_id, name, price, category = parts
-            expense_id = str(uuid.uuid4())
-            new_lines.append(f"{expense_id};{user_id};{name};{price};{category}\n")
-
         else:
-            new_lines.append(line)
+            expense_id, user_id, name, price, category = parts
 
-    with open('../data/expenses.txt', 'w', encoding='utf-8') as f:
-        f.writelines(new_lines)
+        expense = Expense(user_id=int(user_id), name=name, price=int(price), category=category.strip())
+        save_expense(expense)
+        count += 1
 
-    print(f"Migration was successful! \nNew lines: {len(new_lines)}")
+    print(f"Migration was successful! \nTransferred: {count}")
 
 if __name__ == "__main__":
     migrate()
