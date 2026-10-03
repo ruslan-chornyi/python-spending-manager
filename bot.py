@@ -1,4 +1,4 @@
-import asyncio, os, uuid
+import asyncio, os
 from app.storage import load_expense_by_user, save_expense, delete_expense
 from app.states import CategoryStates, AddStates, DeleteStates
 from app.models import Expense
