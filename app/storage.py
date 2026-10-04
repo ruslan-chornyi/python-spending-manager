@@ -55,3 +55,18 @@ def load_expenses_sorted_by_price(user_id: int, descending: bool = False) -> lis
             return session.query(Expense).order_by(Expense.price.desc()).filter(Expense.user_id == user_id).all()
         else:
             return session.query(Expense).order_by(Expense.price).filter(Expense.user_id == user_id).all()
+
+def most_expensive_category(user_id: int) -> str | None:
+    with SessionLocal() as session:
+        result = (
+            session.query(Expense.category, func.sum(Expense.price))
+            .group_by(Expense.category)
+            .order_by(func.sum(Expense.price).desc())
+            .filter(Expense.user_id == user_id)
+            .first()
+        )
+
+        if result is None:
+            return None
+
+        return result[0]

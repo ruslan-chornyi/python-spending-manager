@@ -1,5 +1,5 @@
 import asyncio, os
-from app.storage import load_expense_by_user, save_expense, delete_expense
+from app.storage import load_expense_by_user, save_expense, delete_expense, most_expensive_category
 from app.states import CategoryStates, AddStates, DeleteStates
 from app.models import Expense
 from dotenv import load_dotenv
@@ -25,6 +25,7 @@ You can use these commands:
 /total - show total sum of all expenses
 /category - show expense by 1 category
 /delete - deleting an expense
+/top_category - show most expensive category you spending on
 """)
 
 #async command add
@@ -73,7 +74,7 @@ async def add_category_handler(message: types.Message, state: FSMContext):
 
     expense = Expense(user_id=message.from_user.id,
     name=data["name"],
-    pricr=data["price"],
+    price=data["price"],
     category=category)
     save_expense(expense)
 
@@ -182,6 +183,16 @@ async def delete_number_handler(message: types.Message, state: FSMContext):
         await message.answer("Expense not found.")
 
     await state.clear()
+
+
+@dp.message(Command("top_category"))
+async def top_category_handler(message: types.Message):
+    category = most_expensive_category(message.from_user.id)
+
+    if category is None:
+        await message.answer("No expenses yet")
+    else:
+        await message.answer(f"Your top spending category is: {category}")
 
 async def main():
     await dp.start_polling(bot)
