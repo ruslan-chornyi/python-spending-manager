@@ -38,3 +38,10 @@ async def fake_expenses(category: str | None = None, limit: int = 10):
 
     return result
 
+@app.post("/fake-expenses")
+async def add_fake_expenses(expense: ExpenseCreate):
+
+    data = expense.model_dump()
+    FAKE_EXPENSES.append(data)
+
+    return data
