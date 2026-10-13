@@ -1,10 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-
-class ExpenseCreate(BaseModel):
-    name: str
-    price: float
-    category: str
+from app.schemas import ExpenseCreate, ExpenseRead
 
 app = FastAPI()
 
@@ -45,3 +40,4 @@ async def add_fake_expenses(expense: ExpenseCreate):
     FAKE_EXPENSES.append(data)
 
     return data
+

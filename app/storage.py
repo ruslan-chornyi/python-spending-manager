@@ -60,9 +60,9 @@ def most_expensive_category(user_id: int) -> str | None:
     with SessionLocal() as session:
         result = (
             session.query(Expense.category, func.sum(Expense.price))
+            .filter(Expense.user_id == user_id)
             .group_by(Expense.category)
             .order_by(func.sum(Expense.price).desc())
-            .filter(Expense.user_id == user_id)
             .first()
         )
 
