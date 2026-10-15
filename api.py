@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from app.schemas import ExpenseCreate, ExpenseRead
+from app.storage import load_expense_by_user
+from dotenv import load_dotenv
 
+load_dotenv()
 app = FastAPI()
 
 FAKE_EXPENSES = [
@@ -41,3 +44,7 @@ async def add_fake_expenses(expense: ExpenseCreate):
 
     return data
 
+@app.get("/expenses", response_model=list[ExpenseRead])
+async def get_expenses(user_id: int):
+    expenses = load_expense_by_user(user_id)
+    return expenses
