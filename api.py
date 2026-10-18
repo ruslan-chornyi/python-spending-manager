@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.schemas import ExpenseCreate, ExpenseRead
-from app.storage import load_expense_by_user
+from app.storage import load_expense_by_user, save_expense
+from app.models import Expense
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -48,3 +49,9 @@ async def add_fake_expenses(expense: ExpenseCreate):
 async def get_expenses(user_id: int):
     expenses = load_expense_by_user(user_id)
     return expenses
+
+@app.post("/expenses", response_model=ExpenseRead, status_code=201)
+async def add_expenses(expense: ExpenseCreate, user_id: int):
+    new_expense = Expense(name=expense.name, price=expense.price, category=expense.category, user_id=user_id)
+    save_expense(new_expense)
+    return new_expense

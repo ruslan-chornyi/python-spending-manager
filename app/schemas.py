@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ExpenseCreate(BaseModel):
     name: str
-    price: float
+    price: int
     category: str
 
 class ExpenseRead(BaseModel):
@@ -10,5 +10,5 @@ class ExpenseRead(BaseModel):
 
     expense_id: str
     name: str
-    price: float
+    price: int
     category: str
