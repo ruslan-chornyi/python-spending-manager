@@ -34,14 +34,18 @@ def count_expense_by_user(user_id: int) -> int:
 def get_categories(expenses: list[Expense]) -> set[str]:
     return {e.category for e in expenses}
 
-def delete_expense(expense_id: str) -> bool:
+def delete_expense(expense_id: str, user_id: int | None = None) -> bool:
     with SessionLocal() as session:
-        expenses = session.get(Expense, expense_id)
+        expense = session.get(Expense, expense_id)
 
-        if expenses is None:
+        if expense is None:
             return False
+
+        if user_id is not None and expense.user_id != user_id:
+            return False
+
         else:
-            session.delete(expenses)
+            session.delete(expense)
             session.commit()
             return True
 
