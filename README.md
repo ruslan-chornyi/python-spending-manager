@@ -2,7 +2,7 @@
 
 A personal expense tracker with three interfaces: a command-line tool, a Telegram bot, and a REST API. Data is stored in PostgreSQL and the whole stack runs with Docker Compose.
 
-<!-- TODO: add a screenshot or gif of the bot here, e.g. ![Bot demo](docs/demo.gif) -->
+![Bot demo](docs/demo.png)
 
 ## Features
 
