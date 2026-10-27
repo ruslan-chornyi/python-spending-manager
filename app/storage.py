@@ -1,5 +1,6 @@
+import hashlib, secrets
 from app.db import Base, engine, SessionLocal
-from app.models import Expense
+from app.models import Expense, Apikey
 from sqlalchemy import func
 
 def init_db() -> None:
@@ -44,10 +45,9 @@ def delete_expense(expense_id: str, user_id: int | None = None) -> bool:
         if user_id is not None and expense.user_id != user_id:
             return False
 
-        else:
-            session.delete(expense)
-            session.commit()
-            return True
+        session.delete(expense)
+        session.commit()
+        return True
 
 def total_spent_by_user(user_id: int) -> int:
     with SessionLocal() as session:
@@ -74,3 +74,9 @@ def most_expensive_category(user_id: int) -> str | None:
             return None
 
         return result[0]
+
+def hash_key(key: str) -> str:
+    return hashlib.sha256(key.encode()).hexdigest()
+
+
+

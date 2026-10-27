@@ -17,3 +17,11 @@ class Expense(Base):
 
     def __repr__(self) -> str:
         return f"Expense(expense_id={self.expense_id}, user_id={self.user_id}, name='{self.name}', price={self.price}, category='{self.category}')"
+
+
+class Apikey(Base):
+    __tablename__ = "api_keys"
+
+    key_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(BigInteger, nullable=False)
+    key_hash = Column(String, unique=True, nullable=False)
