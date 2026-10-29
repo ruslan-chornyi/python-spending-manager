@@ -78,5 +78,18 @@ def most_expensive_category(user_id: int) -> str | None:
 def hash_key(key: str) -> str:
     return hashlib.sha256(key.encode()).hexdigest()
 
+def create_api_key(user_id: int) -> str:
+    key = secrets.token_urlsafe(32)
+    api_key = Apikey(user_id=user_id, key_hash=hash_key(key))
+    with SessionLocal() as session:
+        session.add(api_key)
+        session.commit()
+    return key
 
+def get_user_id_by_key(key: str) -> int | None:
+    with SessionLocal() as session:
+        row = session.query(Apikey).filter(Apikey.key_hash == hash_key(key)).first()
 
+        if row is None:
+            return None
+        return row.user_id
