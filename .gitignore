@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 data/expenses.txt
 .env
+.claude/settings.local.json

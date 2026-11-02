@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Bash(cat .env)",
+      "Bash(type .env)",
+      "Bash(Get-Content .env)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(docker compose down *)",
+      "Bash(ssh *)"
+    ]
+  }
+}
