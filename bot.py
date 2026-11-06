@@ -1,5 +1,5 @@
 import asyncio, os
-from app.storage import load_expense_by_user, save_expense, delete_expense, most_expensive_category
+from app.storage import load_expense_by_user, save_expense, delete_expense, most_expensive_category, create_api_key
 from app.states import CategoryStates, AddStates, DeleteStates
 from app.models import Expense
 from dotenv import load_dotenv
@@ -26,6 +26,7 @@ You can use these commands:
 /category - show expense by 1 category
 /delete - deleting an expense
 /top_category - show most expensive category you spending on
+/apikey - get a key for the REST API (replaces your old key)
 """)
 
 #async command add
@@ -193,6 +194,22 @@ async def top_category_handler(message: types.Message):
         await message.answer("No expenses yet")
     else:
         await message.answer(f"Your top spending category is: {category}")
+
+#api key for the REST API
+@dp.message(Command("apikey"))
+async def apikey_handler(message: types.Message):
+    key = create_api_key(message.from_user.id)
+
+    await message.answer(
+        "🔑 Your new API key:\n\n"
+        f"<code>{key}</code>\n\n"
+        "Tap the key to copy it and save it somewhere safe "
+        "(a password manager or a note). "
+        "I store only its hash, so I can't show it again. "
+        "If you lose it, run /apikey again and the old key will stop working.\n\n"
+        "⚠️ Now delete this message so nobody else can see the key.",
+        parse_mode="HTML",
+    )
 
 async def main():
     await dp.start_polling(bot)

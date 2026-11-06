@@ -80,8 +80,9 @@ def hash_key(key: str) -> str:
 
 def create_api_key(user_id: int) -> str:
     key = secrets.token_urlsafe(32)
-    api_key = Apikey(user_id=user_id, key_hash=hash_key(key))
+    api_key = Apikey(user_id=user_id, key_hash=hash_key(key)) # one user = one key: drop old keys in the same transaction as the new insert
     with SessionLocal() as session:
+        session.query(Apikey).filter(Apikey.user_id == user_id).delete()
         session.add(api_key)
         session.commit()
     return key
