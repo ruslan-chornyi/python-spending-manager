@@ -1,18 +1,25 @@
 from fastapi import FastAPI, HTTPException, Depends, Header
+from contextlib import asynccontextmanager
 from app.schemas import ExpenseCreate, ExpenseRead
-from app.storage import load_expense_by_user, save_expense, delete_expense, get_user_id_by_key
+from app.storage import load_expense_by_user, save_expense, delete_expense, get_user_id_by_key, init_db
 from app.models import Expense
 from dotenv import load_dotenv
 
 load_dotenv()
-app = FastAPI()
-
 
 def get_current_user(x_api_key: str = Header()) -> int:
     user_id = get_user_id_by_key(x_api_key)
     if user_id is None:
         raise HTTPException(status_code=401, detail="Invalid API key")
     return user_id
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
