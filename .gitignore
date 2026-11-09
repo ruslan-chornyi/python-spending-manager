@@ -5,3 +5,4 @@ __pycache__/
 data/expenses.txt
 .env
 .claude/settings.local.json
+*.sql
