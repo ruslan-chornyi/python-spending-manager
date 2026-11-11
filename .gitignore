@@ -6,3 +6,4 @@ data/expenses.txt
 .env
 .claude/settings.local.json
 *.sql
+.pytest_cache/
