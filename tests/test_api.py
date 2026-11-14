@@ -13,3 +13,10 @@ def test_health():
 def test_expenses_without_key():
     response = client.get("/expenses")
     assert response.status_code == 422
+
+
+def test_expenses_with_wrong_key():
+    response = client.get("/expenses", headers={"X-API-Key": "wrong_key"})
+    assert response.status_code == 401
+
+
