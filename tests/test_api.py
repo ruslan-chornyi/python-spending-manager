@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from api import app
+from api import app, get_current_user
 
 client = TestClient(app)
 
@@ -20,3 +20,12 @@ def test_expenses_with_wrong_key():
     assert response.status_code == 401
 
 
+def fake_user():
+    return 0
+
+def test_expenses_as_user():
+    app.dependency_overrides[get_current_user] = fake_user
+    response = client.get("/expenses")
+    app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == []
