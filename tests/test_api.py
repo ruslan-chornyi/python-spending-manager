@@ -29,3 +29,13 @@ def test_expenses_as_user():
     app.dependency_overrides.clear()
     assert response.status_code == 200
     assert response.json() == []
+
+
+def test_create_expense_as_user():
+    app.dependency_overrides[get_current_user] = fake_user
+    response = client.post("/expenses", json={"name": "Coffee", "price": 5, "category": "Drink"})
+    app.dependency_overrides.clear()
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "Coffee"
+    assert data["category"] == "drink"
